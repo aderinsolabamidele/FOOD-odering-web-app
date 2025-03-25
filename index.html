@@ -3,23 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Ordering App</title>
+    <title>Food Ordering</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background: #f4f4f4; }
+        .slideshow-container { width: 80%; margin: auto; position: relative; }
+        .slide { display: none; width: 100%; border-radius: 10px; }
+        .menu-button { padding: 15px; font-size: 18px; cursor: pointer; margin: 10px; border: none; background: #ff5733; color: white; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Menu</h1>
-    <ul>
-        {% for item_id, item in menu.items() %}
-            <li>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
-                    <span>{{ item['name'] }} - ${{ item['price'] }}</span>
-                    <input type="hidden" name="item_id" value="{{ item_id }}">
-                    <button type="submit">Add to Cart</button>
-                </form> 
-            </li>
-        {% endfor %}
-    </ul>
+    <h1>Welcome to Our Restaurant</h1>
+    
+    <div class="slideshow-container">
+        <img class="slide" src="/static/african_food.jpg" alt="African Food">
+        <img class="slide" src="/static/chinese_food.jpg" alt="Chinese Food">
+        <img class="slide" src="/static/continental_food.jpg" alt="Continental Food">
+    </div>
+
+    <h2>Select Cuisine</h2>
+    <form action="/menu" method="POST">
+        <button type="submit" class="menu-button" name="cuisine" value="african">African</button>
+        <button type="submit" class="menu-button" name="cuisine" value="chinese">Chinese</button>
+        <button type="submit" class="menu-button" name="cuisine" value="continental">Continental</button>
+    </form>
+
+    <script>
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000);
+        }
+        showSlides();
+    </script>
 </body>
 </html>
+
 
 
 
